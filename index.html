@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richy Motors — Car Sales</title>
+  <meta name="description" content="Richy Motors is a trading company selling all types of vehicles. Browse our inventory and get in touch.">
+  <meta property="og:title" content="Richy Motors — Car Sales">
+  <meta property="og:description" content="All types of vehicles for sale. Trading company.">
+  <meta property="og:image" content="Logo.jpg">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a href="#top" class="logo-link" aria-label="Richy Motors home">
+        <img src="Logo.jpg" alt="Richy Motors — Trading company" class="logo-img" width="220" height="auto">
+      </a>
+      <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul class="nav-list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#inventory">Inventory</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact" class="nav-cta">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <p class="eyebrow">Trading company</p>
+          <h1 class="hero-title">
+            <span class="text-white">Richy</span><span class="text-red">Motors</span>
+          </h1>
+          <p class="hero-lead">Vehicles for sale across every category. We help you find the right car from our curated stock — with clear pricing and personal service at every step.</p>
+          <div class="hero-actions">
+            <a href="#inventory" class="btn btn-primary">View inventory</a>
+            <a href="#contact" class="btn btn-outline">Get in touch</a>
+          </div>
+        </div>
+      </div>
+      <div class="container value-props">
+        <ul class="value-grid">
+          <li class="value-card">
+            <span class="value-icon" aria-hidden="true">01</span>
+            <h3>Curated inventory</h3>
+            <p>Hand-picked vehicles across all makes and types — ready to view and buy.</p>
+          </li>
+          <li class="value-card">
+            <span class="value-icon" aria-hidden="true">02</span>
+            <h3>Verified quality</h3>
+            <p>We check condition, history, and paperwork so you know what you are getting.</p>
+          </li>
+          <li class="value-card">
+            <span class="value-icon" aria-hidden="true">03</span>
+            <h3>Sales &amp; support</h3>
+            <p>Curated inventory and personal guidance from inquiry to handover.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="inventory" class="section inventory-section">
+      <div class="container">
+        <header class="section-header">
+          <h2>Our <span class="text-red">inventory</span></h2>
+          <p>Browse available vehicles. Contact us to reserve, arrange a viewing, or ask any questions.</p>
+        </header>
+        <div class="filter-bar" role="group" aria-label="Filter vehicles">
+          <button type="button" class="filter-chip is-active" data-filter="all">All</button>
+          <button type="button" class="filter-chip" data-filter="available">Available</button>
+          <button type="button" class="filter-chip" data-filter="featured">Featured</button>
+        </div>
+        <div id="inventory-grid" class="inventory-grid" aria-live="polite">
+          <p class="inventory-loading">Loading vehicles…</p>
+        </div>
+        <p id="inventory-empty" class="inventory-empty hidden">No vehicles match this filter.</p>
+      </div>
+    </section>
+
+    <dialog id="vehicle-modal" class="vehicle-modal" aria-labelledby="modal-title">
+      <div class="modal-inner">
+        <button type="button" class="modal-close" aria-label="Close details">&times;</button>
+        <div class="modal-body">
+          <div class="modal-image-wrap">
+            <img id="modal-image" src="" alt="">
+          </div>
+          <div class="modal-details">
+            <h2 id="modal-title"></h2>
+            <p id="modal-price" class="modal-price"></p>
+            <ul id="modal-specs" class="modal-specs"></ul>
+            <p id="modal-status" class="modal-status"></p>
+            <a href="#contact" id="modal-inquire" class="btn btn-primary">Inquire about this car</a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <section id="services" class="section services-section">
+      <div class="container">
+        <header class="section-header">
+          <h2>Our <span class="text-red">services</span></h2>
+          <p>Straightforward support from first inquiry through to keys in your hand.</p>
+        </header>
+        <ol class="steps-list">
+          <li class="step-card">
+            <span class="step-num">1</span>
+            <h3>Consultation</h3>
+            <p>Tell us your budget, preferences, and timeline. We help you narrow down the right models from our stock.</p>
+          </li>
+          <li class="step-card">
+            <span class="step-num">2</span>
+            <h3>Viewing &amp; inspection</h3>
+            <p>Arrange to see a vehicle in person. We walk you through condition, history, and specifications.</p>
+          </li>
+          <li class="step-card">
+            <span class="step-num">3</span>
+            <h3>Purchase &amp; paperwork</h3>
+            <p>Clear pricing and sale documentation — no surprises, with everything explained before you commit.</p>
+          </li>
+          <li class="step-card">
+            <span class="step-num">4</span>
+            <h3>Handover &amp; support</h3>
+            <p>Collection or delivery of your vehicle, plus guidance on registration and any follow-up questions.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="about" class="section about-section">
+      <div class="container about-grid">
+        <div class="about-content">
+          <header class="section-header section-header-left">
+            <h2>About <span class="text-red">Richy Motors</span></h2>
+          </header>
+          <p>Richy Motors is a trading company built around one goal: making it straightforward to buy the right vehicle. From everyday runabouts to executive saloons and specialist models, we offer curated stock and honest advice.</p>
+          <p>Our team works with established partners so you get clear pricing, open communication, and vehicles that match what was promised. From first message to keys in hand, we stay involved.</p>
+          <ul class="about-highlights">
+            <li>Transparent quotes and timelines</li>
+            <li>Curated inventory and personal recommendations</li>
+            <li>Personal contact throughout the process</li>
+          </ul>
+        </div>
+        <div class="about-aside">
+          <blockquote class="about-quote">
+            <p>“Trading company” — we buy and sell with the same care we would want as customers.</p>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <header class="section-header section-header-left">
+            <h2>Contact <span class="text-red">us</span></h2>
+            <p>Ask about a listed vehicle, request a quote, or schedule a call.</p>
+          </header>
+          <ul class="contact-details">
+            <li>
+              <span class="contact-label">Phone</span>
+              <a href="tel:+1234567890">+1 (234) 567-890</a>
+            </li>
+            <li>
+              <span class="contact-label">Email</span>
+              <a href="mailto:info@richymotors.com">info@richymotors.com</a>
+            </li>
+            <li>
+              <span class="contact-label">Location</span>
+              <span>Your city, Country — update in HTML</span>
+            </li>
+          </ul>
+        </div>
+        <form id="contact-form" class="contact-form" novalidate>
+          <div id="form-status" class="form-status hidden" role="status"></div>
+          <div class="form-row">
+            <label for="name">Name <span class="required">*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name" maxlength="120">
+          </div>
+          <div class="form-row">
+            <label for="email">Email <span class="required">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email" maxlength="120">
+          </div>
+          <div class="form-row">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="40">
+          </div>
+          <div class="form-row">
+            <label for="subject">Subject <span class="required">*</span></label>
+            <input type="text" id="subject" name="subject" required maxlength="200">
+          </div>
+          <div class="form-row">
+            <label for="message">Message <span class="required">*</span></label>
+            <textarea id="message" name="message" required rows="5" maxlength="3000"></textarea>
+          </div>
+          <input type="hidden" name="access_key" id="form-access-key" value="">
+          <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off">
+          <button type="submit" class="btn btn-primary btn-block" id="form-submit">Send message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="Logo.jpg" alt="" class="footer-logo" width="180" height="auto">
+        <p class="footer-tagline">Car sales — trading company</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#inventory">Inventory</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="footer-contact">
+        <a href="tel:+1234567890">+1 (234) 567-890</a>
+        <a href="mailto:info@richymotors.com">info@richymotors.com</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; <span id="year"></span> Richy Motors. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/inventory.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
