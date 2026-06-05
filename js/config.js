@@ -5,7 +5,7 @@
  * Google Sheet stock: see docs/MANAGING-STOCK.md
  */
 window.RICHY_CONFIG = {
-  web3formsAccessKey: "YOUR_ACCESS_KEY_HERE",
+  web3formsAccessKey: "19871395-d286-4d5b-8e15-92223fd3628d",
 
   inventory: {
     /** "json" = edit data/vehicles.json | "googleSheet" = client edits a Google Sheet */
