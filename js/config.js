@@ -11,7 +11,7 @@ window.RICHY_CONFIG = {
     /** "json" = edit data/vehicles.json | "googleSheet" = client edits a Google Sheet */
     source: "googleSheet",
     /** From the sheet URL: docs.google.com/spreadsheets/d/THIS_PART/edit */
-    googleSheetId: "https://docs.google.com/spreadsheets/d/1uHxrNkVTbiRM-uLMs-BH8VHNc9azehqYbCdWFrLd23E/edit?usp=sharing",
+    googleSheetId: "1uHxrNkVTbiRM-uLMs-BH8VHNc9azehqYbCdWFrLd23E",
     /** Tab name at the bottom of the spreadsheet (default: Inventory) */
     googleSheetTab: "Inventory",
   },
