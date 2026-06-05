@@ -11,6 +11,8 @@
   const modalInquire = document.getElementById("modal-inquire");
   const modalClose = document.querySelector(".modal-close");
 
+  const inventoryConfig = window.RICHY_CONFIG?.inventory || { source: "json" };
+
   let vehicles = [];
   let activeFilter = "all";
 
@@ -21,7 +23,7 @@
   }
 
   function formatMileage(km) {
-    if (km == null) return null;
+    if (km == null || km === "") return null;
     return Number(km).toLocaleString() + " km";
   }
 
@@ -29,6 +31,140 @@
     if (activeFilter === "available") return v.status === "available";
     if (activeFilter === "featured") return v.featured === true;
     return true;
+  }
+
+  function parseBool(value) {
+    const s = String(value ?? "")
+      .trim()
+      .toLowerCase();
+    return s === "true" || s === "yes" || s === "y" || s === "1";
+  }
+
+  function normalizeVehicle(raw) {
+    if (!raw || !String(raw.id || "").trim()) return null;
+
+    const status = String(raw.status || "available")
+      .trim()
+      .toLowerCase();
+
+    return {
+      id: String(raw.id).trim(),
+      title: String(raw.title || "").trim(),
+      year: raw.year !== "" && raw.year != null ? Number(raw.year) : undefined,
+      make: String(raw.make || "").trim() || undefined,
+      model: String(raw.model || "").trim() || undefined,
+      price: raw.price !== "" && raw.price != null ? Number(raw.price) : raw.price,
+      currency: String(raw.currency || "USD").trim() || "USD",
+      mileage:
+        raw.mileage !== "" && raw.mileage != null ? Number(raw.mileage) : undefined,
+      fuel: String(raw.fuel || "").trim() || undefined,
+      transmission: String(raw.transmission || "").trim() || undefined,
+      image: String(raw.image || "").trim(),
+      status: status === "sold" ? "sold" : "available",
+      featured: parseBool(raw.featured),
+    };
+  }
+
+  function parseCsv(text) {
+    const rows = [];
+    let row = [];
+    let field = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      const next = text[i + 1];
+
+      if (inQuotes) {
+        if (ch === '"' && next === '"') {
+          field += '"';
+          i++;
+        } else if (ch === '"') {
+          inQuotes = false;
+        } else {
+          field += ch;
+        }
+        continue;
+      }
+
+      if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === ",") {
+        row.push(field);
+        field = "";
+      } else if (ch === "\n" || (ch === "\r" && next === "\n")) {
+        row.push(field);
+        field = "";
+        if (row.some((cell) => String(cell).trim() !== "")) rows.push(row);
+        row = [];
+        if (ch === "\r") i++;
+      } else if (ch !== "\r") {
+        field += ch;
+      }
+    }
+
+    if (field.length || row.length) {
+      row.push(field);
+      if (row.some((cell) => String(cell).trim() !== "")) rows.push(row);
+    }
+
+    return rows;
+  }
+
+  function csvToVehicles(csvText) {
+    const rows = parseCsv(csvText.trim());
+    if (rows.length < 2) return [];
+
+    const headers = rows[0].map((h) =>
+      String(h)
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "_")
+    );
+
+    const list = [];
+    for (let i = 1; i < rows.length; i++) {
+      const cells = rows[i];
+      const raw = {};
+      headers.forEach((key, idx) => {
+        raw[key] = cells[idx] != null ? String(cells[idx]).trim() : "";
+      });
+      const vehicle = normalizeVehicle(raw);
+      if (vehicle && vehicle.title && vehicle.image) list.push(vehicle);
+    }
+    return list;
+  }
+
+  async function loadFromJson() {
+    const res = await fetch("data/vehicles.json");
+    if (!res.ok) throw new Error("Failed to load vehicles.json");
+    const data = await res.json();
+    return data.map((v) => normalizeVehicle(v)).filter(Boolean);
+  }
+
+  async function loadFromGoogleSheet() {
+    const sheetId = (inventoryConfig.googleSheetId || "").trim();
+    const tab = inventoryConfig.googleSheetTab || "Inventory";
+    if (!sheetId) throw new Error("googleSheetId missing in js/config.js");
+
+    const url =
+      "https://docs.google.com/spreadsheets/d/" +
+      encodeURIComponent(sheetId) +
+      "/gviz/tq?tqx=out:csv&sheet=" +
+      encodeURIComponent(tab);
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Could not fetch Google Sheet");
+    const csv = await res.text();
+    const list = csvToVehicles(csv);
+    if (!list.length) throw new Error("No vehicles found in sheet");
+    return list;
+  }
+
+  function showError(message) {
+    if (grid) {
+      grid.innerHTML = '<p class="inventory-loading">' + escapeHtml(message) + "</p>";
+    }
   }
 
   function renderCard(v) {
@@ -153,16 +289,30 @@
   });
 
   async function load() {
+    const source = inventoryConfig.source || "json";
+
     try {
-      const res = await fetch("data/vehicles.json");
-      if (!res.ok) throw new Error("Failed to load");
-      vehicles = await res.json();
-      render();
-    } catch {
-      if (grid) {
-        grid.innerHTML =
-          '<p class="inventory-loading">Could not load inventory. Check that data/vehicles.json exists.</p>';
+      if (source === "googleSheet") {
+        vehicles = await loadFromGoogleSheet();
+      } else {
+        vehicles = await loadFromJson();
       }
+      render();
+    } catch (err) {
+      if (source === "googleSheet") {
+        try {
+          vehicles = await loadFromJson();
+          render();
+          return;
+        } catch {
+          /* fall through */
+        }
+      }
+      showError(
+        source === "googleSheet"
+          ? "Could not load stock from Google Sheets. Check docs/MANAGING-STOCK.md and js/config.js."
+          : "Could not load inventory. Check data/vehicles.json or your Google Sheet setup."
+      );
     }
   }
 

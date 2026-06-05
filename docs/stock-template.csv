@@ -1,0 +1,3 @@
+id,title,year,make,model,price,currency,mileage,fuel,transmission,image,status,featured
+1,2020 Toyota Corolla,2020,Toyota,Corolla,12500,USD,45000,Petrol,Automatic,https://images.unsplash.com/photo-1621007947382-bcb9047b4a85?w=800&q=80,available,yes
+2,2018 Honda Civic,2018,Honda,Civic,9800,USD,62000,Petrol,Manual,https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80,available,

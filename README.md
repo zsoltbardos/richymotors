@@ -36,9 +36,15 @@ Edit [`index.html`](index.html):
 - Email: `info@richymotors.com`
 - Location text in the Contact section
 
-## Add or edit vehicles
+## Managing stock (for your client)
 
-Edit [`data/vehicles.json`](data/vehicles.json). Each entry:
+**Recommended:** Google Sheets — the business owner edits a spreadsheet; the site loads it live. No code.
+
+1. Follow **[docs/MANAGING-STOCK.md](docs/MANAGING-STOCK.md)** (setup + daily use).
+2. Optional CSV template: [docs/stock-template.csv](docs/stock-template.csv) — import into Google Sheets.
+3. In [`js/config.js`](js/config.js) set `inventory.source` to `"googleSheet"` and paste the Sheet ID.
+
+**Developer fallback:** keep `inventory.source: "json"` and edit [`data/vehicles.json`](data/vehicles.json).
 
 | Field | Description |
 |-------|-------------|
@@ -48,11 +54,9 @@ Edit [`data/vehicles.json`](data/vehicles.json). Each entry:
 | `price`, `currency` | Shown on cards |
 | `mileage` | Kilometers (number) |
 | `fuel`, `transmission` | Optional specs |
-| `image` | URL or path e.g. `assets/cars/my-car.jpg` |
+| `image` | Full URL or path e.g. `assets/cars/my-car.jpg` |
 | `status` | `available` or `sold` |
-| `featured` | `true` to show under Featured filter |
-
-Place local images in `assets/cars/` and reference them as `assets/cars/filename.jpg`.
+| `featured` | `yes` / `true` for Featured filter |
 
 ## Deploy
 
