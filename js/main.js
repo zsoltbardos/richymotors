@@ -11,8 +11,16 @@
 
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  if (accessKeyInput && window.RICHY_CONFIG) {
-    accessKeyInput.value = window.RICHY_CONFIG.web3formsAccessKey || "";
+  function getAccessKey() {
+    return (
+      accessKeyInput?.value?.trim() ||
+      window.RICHY_CONFIG?.web3formsAccessKey?.trim() ||
+      ""
+    );
+  }
+
+  if (accessKeyInput && window.RICHY_CONFIG?.web3formsAccessKey) {
+    accessKeyInput.value = window.RICHY_CONFIG.web3formsAccessKey;
   }
 
   function closeNav() {
@@ -78,10 +86,18 @@
       return;
     }
 
-    const key = accessKeyInput?.value?.trim();
+    if (!window.RICHY_CONFIG) {
+      showFormStatus(
+        "Site configuration did not load. Check that js/config.js is deployed and refresh the page.",
+        "error"
+      );
+      return;
+    }
+
+    const key = getAccessKey();
     if (!key || key === "YOUR_ACCESS_KEY_HERE") {
       showFormStatus(
-        "Form is not configured yet. Add your Web3Forms access key in js/config.js (see README).",
+        "Form is not configured yet. Add your Web3Forms access key in js/config.js, save, push to GitHub, then refresh.",
         "error"
       );
       return;
