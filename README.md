@@ -66,13 +66,13 @@ Upload the entire `richsite` folder to any static host:
 - **Cloudflare Pages** — same
 - **GitHub Pages** — push to a repo and enable Pages on the root or `/docs`
 
-Ensure `Logo.jpg` and all paths remain at the site root. Use HTTPS in production.
+Ensure `Logo2.png` and all paths remain at the site root. Use HTTPS in production.
 
 ## File structure
 
 ```
 index.html          Main page (all sections)
-Logo.jpg            Brand logo
+Logo2.png           Brand logo (transparent PNG)
 css/styles.css      Styles
 js/config.js        Web3Forms key
 js/main.js          Nav, form, inquire pre-fill
